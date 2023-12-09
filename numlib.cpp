@@ -13,7 +13,6 @@ inline int is_nonneg_bounded(int x, int m) {
         return x >= 0 && x < m;
 } 
 
-
 class Generator {
 
 };
@@ -84,32 +83,16 @@ std::pair<std::vector<double>, std::vector<double>> box_muller(const std::vector
 
 
 int main() {
-    //std::cout << "Linear Congruent Generator\n";
-    /*size_t n = 100000;
-    int a = 106;
-    int b = 1283;
-    int m = 6075;
-    int x0 = 1;
-    */
-    //auto lcg = LinearCongruent::create(x0, a, b, m);
-    //auto rv = lcg.generate(n);
-
+    
     {
-    /*
+
         size_t n = 100000;
         int a = 1664525;
         int b = 1013904223;
         int m = INT32_MAX;
         int x0 = 15;
-    */
-        size_t n = 100000;
-        int m = 2048;
-        int a = 43;
-        int b = 0;
-        int x0 = 1;
-
-
-
+  
+ 
         auto lcg1 = LinearCongruent::create(x0, a, b, m);
         auto lcg2 = LinearCongruent::create(x0 + 12, a, b, m);
 
