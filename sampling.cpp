@@ -39,17 +39,43 @@ std::vector<T> linspace(T a, T b, size_t N) {
 int main() {
 
     Beta dist{2.0, 5.0};
-
-
     auto interval = linspace(0.0, 1.0, 1000);
-
     auto beta_distr = interval;
-
     for(auto it  = beta_distr.begin(); it != beta_distr.end(); ++it) {
         *it = dist(*it);
     }
 
-    for (size_t i = 0; i < beta_distr.size(); ++i) {
-        std::cout << interval[i] << ", " << beta_distr[i] << '\n';
+    auto p_star = *std::max_element(
+        beta_distr.begin(),
+        beta_distr.end()
+        );
+
+    {
+        size_t samples = 5000;
+        std::random_device rd;
+
+        std::mt19937 e2(rd());
+
+        std::uniform_real_distribution<> uniform01(0, 1);
+        std::uniform_real_distribution<> uniform0p(0, p_star);
+
+        std::vector<double> hist{};
+        std::vector<double> samp{};
+
+        for (size_t i = 0; i < samples; ++i) {
+            double x = uniform01(e2);
+            double u = uniform0p(e2);
+
+            if (u <= dist(x)) {
+                hist.push_back(u);
+                samp.push_back(x);
+            }
+
+        }
+
+        for (size_t i = 0; i < hist.size(); ++i) {
+            std::cout << samp[i] << ", " << hist[i] << '\n';
+        }
+
     }
 }
