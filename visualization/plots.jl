@@ -4,12 +4,6 @@ using CSV
 
 lcg = CSV.File("visualization/data/lcg.csv") |>  Tables.matrix
 
-norm2d = CSV.File("visualization/data/norm2d_deg.csv") |>  Tables.matrix
-
-beta = CSV.File("visualization/data/beta.csv") |>  Tables.matrix
-
-beta_sampled = CSV.File("visualization/data/beta_sampling.csv") |>  Tables.matrix
-
 begin
     
     p = histogram(lcg[:,2],
@@ -21,6 +15,7 @@ begin
         )
 end
 
+norm2d = CSV.File("visualization/data/norm2d_deg.csv") |>  Tables.matrix
 
 begin
     scatter(norm2d[:,1],norm2d[:,2])
@@ -32,9 +27,14 @@ begin
 end
 
 
+beta = CSV.File("visualization/data/beta.csv") |>  Tables.matrix
+
 begin
     scatter(beta[:,1], beta[:,2])
 end
+
+
+beta_sampled = CSV.File("visualization/data/beta_sampling.csv") |>  Tables.matrix
 
 begin
 
@@ -58,4 +58,16 @@ begin
 
     plot(plot1, plot2, layout=(1, 2))
 
+end
+
+
+onlinestats = CSV.File("visualization/data/onlinestat.csv") |>  Tables.matrix
+begin
+    signal =  onlinestats[:,1]
+    ma = onlinestats[:,2]
+    var = onlinestats[:,3]
+
+    plot(signal, label = "signal")
+    plot!(ma, label = "ma")
+    plot!(sqrt.(var) , label = "std")
 end
